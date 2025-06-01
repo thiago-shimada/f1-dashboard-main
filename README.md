@@ -25,13 +25,13 @@ This project consists of two main components:
 
 ## Project Structure
 
-\`\`\`
+```
 f1-dashboard-main/
 ├── client/          # React frontend (submodule)
 ├── server/          # Express backend (submodule)
 ├── docs/           # Documentation
 └── README.md       # This file
-\`\`\`
+```
 
 ## Quick Start
 
@@ -43,13 +43,13 @@ f1-dashboard-main/
 ### Installation
 
 1. Clone the repository with submodules:
-\`\`\`bash
+```bash
 git clone --recurse-submodules https://github.com/YOUR_USERNAME/f1-dashboard-main.git
 cd f1-dashboard-main
-\`\`\`
+```
 
 2. Install dependencies:
-\`\`\`bash
+```bash
 # Install server dependencies
 cd server
 npm install
@@ -57,12 +57,12 @@ npm install
 # Install client dependencies
 cd ../client
 npm install
-\`\`\`
+```
 
 3. Configure database connection in \`server/server.js\`
 
 4. Start the applications:
-\`\`\`bash
+```bash
 # Terminal 1 - Start backend
 cd server
 node server.js
@@ -70,7 +70,7 @@ node server.js
 # Terminal 2 - Start frontend
 cd client
 npm start
-\`\`\`
+```
 
 5. Access the application at \`http://localhost:3000\`
 
@@ -84,13 +84,13 @@ npm start
 
 ### Database Requirements
 The application requires the following PostgreSQL functions:
-- \`Autentica_Usuario(varchar, varchar)\`
-- \`ObterInfoUsuario(varchar)\`
-- \`VitoriasEscuderia(integer)\`
-- \`PilotosEscuderia(integer)\`
-- \`AnosEscuderia(integer)\`
-- \`AnosPiloto(integer)\`
-- \`EstatisticasPiloto(integer)\`
+- `Autentica_Usuario(varchar, varchar)`
+- `ObterInfoUsuario(varchar)`
+- `VitoriasEscuderia(integer)`
+- `PilotosEscuderia(integer)`
+- `AnosEscuderia(integer)`
+- `AnosPiloto(integer)`
+- `EstatisticasPiloto(integer)`
 
 ## Contributing
 
