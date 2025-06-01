@@ -1,6 +1,9 @@
 #!/bin/bash
 echo "Setting up F1 Dashboard development environment..."
 
+echo "Installing main dependencies..."
+npm install
+
 # Install server dependencies
 echo "Installing server dependencies..."
 cd server
