@@ -59,7 +59,7 @@ cd ../client
 npm install
 ```
 
-3. Configure database connection in \`server/server.js\`
+3. Configure database connection in `server/server.js`
 
 4. Start the applications:
 ```bash
@@ -72,7 +72,7 @@ cd client
 npm start
 ```
 
-5. Access the application at \`http://localhost:3000\`
+5. Access the application at `http://localhost:3000`
 
 ## Development
 
