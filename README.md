@@ -50,6 +50,9 @@ cd f1-dashboard-main
 
 2. Install dependencies:
 ```bash
+# Install main dependencies
+npm install
+
 # Install server dependencies
 cd server
 npm install
@@ -57,6 +60,11 @@ npm install
 # Install client dependencies
 cd ../client
 npm install
+```
+
+Alternatively, you can run
+```bash
+./setup.sh
 ```
 
 3. Configure database connection in `server/server.js`
@@ -70,6 +78,11 @@ node server.js
 # Terminal 2 - Start frontend
 cd client
 npm start
+```
+
+Alternatively, you can run
+```bash
+npm run dev
 ```
 
 5. Access the application at `http://localhost:3000`
