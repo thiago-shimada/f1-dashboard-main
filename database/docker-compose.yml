@@ -1,0 +1,15 @@
+services:
+    postgres:
+        image: postgres:16.8
+        container_name: postgres_f1
+        environment:
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_DB=f1db
+        ports:
+            - 5432:5432
+        volumes:
+            - ./data:/var/lib/postgresql/data
+            - ./init:/docker-entrypoint-initdb.d
+            - ./data_files:/data_files
+        restart: unless-stopped

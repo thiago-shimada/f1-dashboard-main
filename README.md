@@ -27,9 +27,12 @@ This project consists of two main components:
 
 ```
 f1-dashboard-main/
-├── client/          # React frontend (submodule)
-├── server/          # Express backend (submodule)
-├── docs/           # Documentation
+├── client/          # React frontend
+├── server/          # Express backend
+├── database/        # PostgreSQL database setup with Docker Compose
+│   ├── data/        # PostgreSQL database will be stored here
+│   ├── init/        # SQL initialization scripts
+│   └── data_files/  # CSV/TSV files for database population
 └── README.md       # This file
 ```
 
@@ -37,14 +40,14 @@ f1-dashboard-main/
 
 ### Prerequisites
 - Node.js 18+
-- PostgreSQL database with F1 schema
+- Docker and Docker Compose (for database setup)
 - Git
 
 ### Installation
 
 1. Clone the repository with submodules:
 ```bash
-git clone --recurse-submodules https://github.com/YOUR_USERNAME/f1-dashboard-main.git
+git clone --recurse-submodules https://github.com/thiago-shimada/f1-dashboard-main.git
 cd f1-dashboard-main
 ```
 
@@ -67,22 +70,23 @@ Alternatively, you can run
 ./setup.sh
 ```
 
-3. Configure database connection in `server/server.js`
+3. Set up and start the database:
+```bash
+# Start PostgreSQL database with Docker
+cd database
+docker compose up -d
+cd ..
+```
 
 4. Start the applications:
 ```bash
-# Terminal 1 - Start backend
-cd server
-node server.js
-
-# Terminal 2 - Start frontend
-cd client
-npm start
+# Run both client and server
+npm run dev
 ```
 
-Alternatively, you can run
+Alternatively, you can run the all-in-one setup script:
 ```bash
-npm run dev
+./run.sh
 ```
 
 5. Access the application at `http://localhost:3000`
@@ -96,14 +100,15 @@ npm run dev
 - Log errors with contextual information
 
 ### Database Requirements
-The application requires the following PostgreSQL functions:
-- `Autentica_Usuario(varchar, varchar)`
-- `ObterInfoUsuario(varchar)`
-- `VitoriasEscuderia(integer)`
-- `PilotosEscuderia(integer)`
-- `AnosEscuderia(integer)`
-- `AnosPiloto(integer)`
-- `EstatisticasPiloto(integer)`
+The PostgreSQL database is set up automatically with Docker Compose and contains:
+- F1 race data, drivers, constructors, and results
+- Required authentication functions:
+  - `Autentica_Usuario(varchar, varchar)`
+  - `ObterInfoUsuario(varchar)`
+- User accounts for different role types
+- Indexes for query optimization
+
+All initialization scripts are located in the `database/init/` directory.
 
 ## Contributing
 

@@ -16,4 +16,7 @@ cd client
 npm install
 cd ..
 
-echo "Setup complete! Run 'npm run dev' to start both servers."
+echo "Setup complete!"
+echo "- To start everything (database and servers): ./run.sh"
+echo "- To start only the database: cd database && docker compose up -d"
+echo "- To start only the development servers: npm run dev"
