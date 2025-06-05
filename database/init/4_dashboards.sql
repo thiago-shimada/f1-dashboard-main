@@ -12,9 +12,8 @@ WITH race_stats AS (
         r.raceid,
         r.name,
         r.date,
-        r.time AS race_start_time_text,
-        MAX(r2.laps) AS max_laps,
-        MIN(r2.Milliseconds) AS min_milliseconds,
+        r.time AS race_start_time,
+        MAX(r2.laps) as max_laps,
         MAX(r2.Milliseconds) AS max_milliseconds
     FROM races r
     JOIN results r2 ON r2.raceid = r.raceid
@@ -22,21 +21,16 @@ WITH race_stats AS (
     GROUP BY r.raceid, r.name, r.date, r.time
 )
 SELECT
-    name,
-    date,
-    race_start_time_text,
-    max_laps,
+    name AS corrida,
+    date AS data,
+    race_start_time AS "horario de inicio",
+    max_laps AS "total de voltas",
     CASE
-        WHEN min_milliseconds IS NOT NULL THEN
-            TO_CHAR((min_milliseconds::BIGINT || ' milliseconds')::INTERVAL, 'HH24:MI:SS.MS')
+        WHEN date IS NOT NULL AND race_start_time IS NOT NULL 
+             AND race_start_time <> '' AND max_milliseconds IS NOT NULL THEN
+            ((date + race_start_time::TIME) + (max_milliseconds::BIGINT || ' milliseconds')::INTERVAL)::TIME
         ELSE NULL
-    END AS fastest_driver_duration,
-    CASE
-        WHEN date IS NOT NULL AND race_start_time_text IS NOT NULL 
-             AND race_start_time_text <> '' AND max_milliseconds IS NOT NULL THEN
-            (date + race_start_time_text::TIME) + (max_milliseconds::BIGINT || ' milliseconds')::INTERVAL
-        ELSE NULL
-    END AS race_calculated_end_time
+    END AS "horario final"
 FROM race_stats
 ORDER BY name, date;
 

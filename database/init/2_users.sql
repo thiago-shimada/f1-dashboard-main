@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 BEGIN;
 
 ALTER TABLE Driver
@@ -35,14 +37,14 @@ BEGIN;
 
 INSERT INTO USERS (login, password, tipo)
 VALUES 
-('admin', 'admin', 'Administrador');
+('admin', crypt('admin', gen_salt('bf')), 'Administrador');
 
 INSERT INTO USERS (login, password, tipo, idoriginal)
-SELECT ConstructorRef || '_c', ConstructorRef, 'Escuderia', ConstructorId
+SELECT ConstructorRef || '_c', crypt(ConstructorRef, gen_salt('bf')), 'Escuderia', ConstructorId
 FROM Constructors;
 
 INSERT INTO USERS (login, password, tipo, idoriginal)
-SELECT DriverRef || '_d', DriverRef, 'Piloto', DriverId
+SELECT DriverRef || '_d', crypt(DriverRef, gen_salt('bf')), 'Piloto', DriverId
 FROM Driver;
 
 COMMIT;
@@ -95,7 +97,7 @@ BEGIN
     END IF;
     
     -- Verifica a senha
-    IF r_stored_password != s_password THEN
+    IF r_stored_password IS NULL OR crypt(s_password, r_stored_password) != r_stored_password THEN
         RETURN QUERY SELECT 
             NULL::INTEGER, 
             NULL::VARCHAR(50), 
@@ -141,7 +143,7 @@ BEGIN
         -- Atualiza o usuário existente para o piloto
         UPDATE USERS 
         SET login = NEW.DriverRef || '_d', 
-            password = NEW.DriverRef, 
+            password = crypt(NEW.DriverRef, gen_salt('bf')), 
             tipo = 'Piloto',
             idoriginal = NEW.DriverId
         WHERE login = OLD.DriverRef || '_d';
@@ -151,7 +153,7 @@ BEGIN
         WHERE login = OLD.DriverRef || '_d';
     ELSE 
         INSERT INTO USERS (login, password, tipo, idoriginal)
-        VALUES (NEW.DriverRef || '_d', NEW.DriverRef, 'Piloto', NEW.DriverId);
+        VALUES (NEW.DriverRef || '_d', crypt(NEW.DriverRef, gen_salt('bf')), 'Piloto', NEW.DriverId);
     END IF;    
     
     RETURN NULL;
@@ -172,7 +174,7 @@ BEGIN
         -- Atualiza o usuário existente para a escuderia
         UPDATE USERS 
         SET login = NEW.ConstructorRef || '_c', 
-            password = NEW.ConstructorRef, 
+            password = crypt(NEW.ConstructorRef, gen_salt('bf')), 
             tipo = 'Escuderia',
             idoriginal = NEW.ConstructorId
         WHERE login = OLD.ConstructorRef || '_c';
@@ -182,7 +184,7 @@ BEGIN
         WHERE login = OLD.ConstructorRef || '_c';
     ELSE 
         INSERT INTO USERS (login, password, tipo, idoriginal)
-        VALUES (NEW.ConstructorRef || '_c', NEW.ConstructorRef, 'Escuderia', NEW.ConstructorId);
+        VALUES (NEW.ConstructorRef || '_c', crypt(NEW.ConstructorRef, gen_salt('bf')), 'Escuderia', NEW.ConstructorId);
     END IF;    
     
     RETURN NULL;
