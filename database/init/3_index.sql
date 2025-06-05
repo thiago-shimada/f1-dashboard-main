@@ -1,6 +1,8 @@
 CREATE EXTENSION IF NOT EXISTS Cube;
 CREATE EXTENSION IF NOT EXISTS EarthDistance;
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
+CREATE INDEX IdxSurnameDriver ON Driver USING GIN (LOWER(surname) gin_trgm_ops);
 CREATE INDEX IdxDriveridResults ON Results USING HASH (DriverId);
 CREATE INDEX IdxConstructorDriverResults ON results (constructorid, driverid); -- Necessária, pois algumas consultas fazem um group by em constructorid e para cada um conta distinct driverid, então ambos são necessários para o índice, proporcionando melhor performance do que include driverid
 CREATE INDEX IdxRaceidResults ON Results USING HASH (RaceId);

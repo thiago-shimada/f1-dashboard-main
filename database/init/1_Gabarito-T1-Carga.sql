@@ -289,22 +289,22 @@ CREATE TABLE GeoCities15KTEXT(
 
 --==============================================================================================================
 --== Carrega as tabelas ========================================================================================
-PERFORM LoadFile(DirLocal, 'Circuits.csv', 'Circuits', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
-PERFORM LoadFile(DirLocal, 'Constructors.csv', 'Constructors', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
+PERFORM LoadFile(DirLocal, 'circuits.csv', 'Circuits', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
+PERFORM LoadFile(DirLocal, 'constructors.csv', 'Constructors', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
 -- PERFORM LoadFile(DirLocal, 'ConstructorResults.csv', 'ConstructorResults', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
 -- PERFORM LoadFile(DirLocal, 'ConstructorStandings.csv', 'ConstructorStandings', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
 PERFORM LoadFile(DirLocal, 'Driver_Standings.csv', 'DriverStandings', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
-PERFORM LoadFile(DirLocal, 'Drivers.csv', 'Driver', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
-PERFORM LoadFile(DirLocal, 'Lap_Times.csv', 'LapTimes', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
-PERFORM LoadFile(DirLocal, 'Pit_Stops.csv', 'PitStops', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
-PERFORM LoadFile(DirLocal, 'Qualifying.csv', 'Qualifying', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
-PERFORM LoadFile(DirLocal, 'Races.csv', 'Races', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
-PERFORM LoadFile(DirLocal, 'Results.csv', 'Results', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
-PERFORM LoadFile(DirLocal, 'Seasons.csv', 'Seasons', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
-PERFORM LoadFile(DirLocal, 'Status.csv', 'Status', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
+PERFORM LoadFile(DirLocal, 'drivers.csv', 'Driver', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
+PERFORM LoadFile(DirLocal, 'lap_Times.csv', 'LapTimes', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
+PERFORM LoadFile(DirLocal, 'pit_Stops.csv', 'PitStops', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
+PERFORM LoadFile(DirLocal, 'qualifying.csv', 'Qualifying', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
+PERFORM LoadFile(DirLocal, 'races.csv', 'Races', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
+PERFORM LoadFile(DirLocal, 'results.csv', 'Results', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
+PERFORM LoadFile(DirLocal, 'seasons.csv', 'Seasons', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
+PERFORM LoadFile(DirLocal, 'status.csv', 'Status', 'DELIMITER '','', NULL ''\N'', HEADER true, FORMAT CSV');
 
-PERFORM LoadFile(DirLocal, 'Airports_fixed.csv', 'Airports', 'DELIMITER '','', NULL '''', HEADER true, FORMAT CSV');
-PERFORM LoadFile(DirLocal, 'Countries.csv', 'Countries', 'DELIMITER '','', NULL '''', HEADER true, FORMAT CSV');
+PERFORM LoadFile(DirLocal, 'airports_fixed.csv', 'Airports', 'DELIMITER '','', NULL '''', HEADER true, FORMAT CSV');
+PERFORM LoadFile(DirLocal, 'countries.csv', 'Countries', 'DELIMITER '','', NULL '''', HEADER true, FORMAT CSV');
 
 ---- -- Faz a leitura da tabela Cities15K como uma coleção de linhas ---------------------------------------------------
 PERFORM LoadFile(DirLocal, 'Cities15000.tsv', 'GeoCities15KTEXT', 'DELIMITER E''\b'', NULL '''', HEADER false');

@@ -1,0 +1,29 @@
+# Development override for hot reloading and debugging
+version: '3.8'
+
+services:
+  server:
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    command: npm run dev
+    ports:
+      - "3001:3001"
+      - "9229:9229"  # Debug port
+    
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./client/src:/app/src
+      - ./client/public:/app/public
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_API_URL=http://localhost:3001
+    ports:
+      - "3000:3000"
+    command: npm start
