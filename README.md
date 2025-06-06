@@ -45,6 +45,26 @@ f1-dashboard-main/
 
 ### Installation
 
+#### Option 1: Using Docker (recommended)
+
+1. Clone the repository with submodules:
+```bash
+git clone --recurse-submodules https://github.com/thiago-shimada/f1-dashboard-main.git
+cd f1-dashboard-main
+```
+
+2. Build the docker compose:
+```bash
+docker compose build
+```
+
+3. Run the docker compose:
+```bash
+docker compose up -d
+```
+
+#### Option 2: Using node in your machine
+
 1. Clone the repository with submodules:
 ```bash
 git clone --recurse-submodules https://github.com/thiago-shimada/f1-dashboard-main.git
