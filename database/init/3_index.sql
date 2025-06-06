@@ -6,24 +6,13 @@ CREATE INDEX IdxSurnameDriver ON Driver USING GIN (LOWER(surname) gin_trgm_ops);
 CREATE INDEX IdxDriveridResults ON Results USING HASH (DriverId);
 CREATE INDEX IdxConstructorDriverResults ON results (constructorid, driverid); -- Necessária, pois algumas consultas fazem um group by em constructorid e para cada um conta distinct driverid, então ambos são necessários para o índice, proporcionando melhor performance do que include driverid
 CREATE INDEX IdxRaceidResults ON Results USING HASH (RaceId);
-CREATE INDEX IdxResultsConstructorRaceLaps ON results (constructorid, raceid) INCLUDE (laps); -- Covers the exact GROUP BY pattern
+CREATE INDEX IdxResultsConstructorRaceLaps ON results (constructorid, raceid) INCLUDE (laps); -- exato padrão GROUP BY em algumas consultas
 CREATE INDEX IF NOT EXISTS IdxConstructorRaceResults ON results (constructorid, raceid); -- Para consultas que fazem GROUP BY constructorid e COUNT(DISTINCT raceid)
 CREATE INDEX IdxStatusidResults ON Results (StatusId, ResultId);
 CREATE INDEX IdxAirportLL ON airports USING gist (ll_to_earth(latdeg, longdeg)) WHERE type IN ('medium_airport', 'large_airport') AND isocountry = 'BR'; -- Tipo gist para permitir consultas geográficas, índice parcial apenas para aeroportos médios e grandes no Brasil
 CREATE INDEX IdxCitiesLL ON geocities15k USING gist (ll_to_earth(lat, long)); -- Tipo gist para permitir consultas geográficas, índice completo para todas as cidades
 CREATE INDEX IdxResultsMillisecondsNotNull ON results (constructorid, raceid, laps, milliseconds) WHERE milliseconds IS NOT NULL;
 CREATE INDEX IdxResultsStatusConstructor ON results (statusid, constructorid); -- Report 5
-
-
--- CREATE INDEX IdxConstructoridResults ON Results USING HASH (ConstructorId);
--- CREATE INDEX IdxRacesCircuit ON races (raceid, circuitid); -- For races-circuits join
--- CREATE INDEX IdxConstructorsName ON constructors (name); -- For sorting by constructor name
--- CREATE INDEX IdxRacesCircuitJoin ON races (circuitid, raceid); -- Better join performance
--- CREATE INDEX IdxResultsStatusId ON results (statusid, resultid); -- Optimized for status counting queries
--- CREATE INDEX IdxResultsConstructorRaceOptimized ON results (constructorid, raceid, laps); -- Optimized for constructor-race grouping with laps included
--- CREATE INDEX IdxConstructorsNameId ON constructors (name, constructorid); -- For ordering by constructor name
-
-
 
 -- obterusuarioinfo -> select 1: idxdriveridresults; select2: idxconstructordriverresults
 -- adm_view2 -> idxraceidresults
@@ -42,14 +31,3 @@ CREATE INDEX IdxResultsStatusConstructor ON results (statusid, constructorid); -
 -- Report 5 -> idxresultsstatusconstructor
 -- Report 6 -> idxdriveridresults
 -- Report 7 -> idxdriveridresults
-
--- idxdriveridresults
--- idxconstructordriverresults
--- idxraceidresults
--- idxresultsconstructorracelaps
--- idxconstructorraceresults
--- IdxStatusidResults
--- idxcitiesll
--- idxairportsll
--- idxresultsmillisecondsnotnull
--- idxresultsstatusconstructor

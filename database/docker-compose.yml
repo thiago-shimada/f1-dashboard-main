@@ -3,6 +3,7 @@ services:
     image: postgres:16.8
     container_name: postgres_f1
     environment:
+      TZ: "America/Sao_Paulo"
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: f1db
