@@ -11,7 +11,6 @@ CREATE INDEX IF NOT EXISTS IdxConstructorRaceResults ON results (constructorid, 
 CREATE INDEX IdxStatusidResults ON Results (StatusId, ResultId);
 CREATE INDEX IdxAirportLL ON airports USING gist (ll_to_earth(latdeg, longdeg)) WHERE type IN ('medium_airport', 'large_airport') AND isocountry = 'BR'; -- Tipo gist para permitir consultas geográficas, índice parcial apenas para aeroportos médios e grandes no Brasil
 CREATE INDEX IdxCitiesLL ON geocities15k USING gist (ll_to_earth(lat, long)); -- Tipo gist para permitir consultas geográficas, índice completo para todas as cidades
-CREATE INDEX IdxResultsMillisecondsNotNull ON results (constructorid, raceid, laps, milliseconds) WHERE milliseconds IS NOT NULL;
 CREATE INDEX IdxResultsStatusConstructor ON results (statusid, constructorid); -- Report 5
 
 -- obterusuarioinfo -> select 1: idxdriveridresults; select2: idxconstructordriverresults
@@ -26,7 +25,7 @@ CREATE INDEX IdxResultsStatusConstructor ON results (statusid, constructorid); -
 -- Action 1 constructor -> idxconstructordriverresults
 -- Report 1 -> IdxStatusidResults
 -- Report 2 -> idxcitiesll, idxairportsll
--- Report 3 -> select 1: idxconstructordriverresults; select 2: idxconstructorraceresults; select 3: none; select 4: idxresultsmillisecondsnotnull;
+-- Report 3 -> select 1: idxconstructordriverresults; select 2: idxconstructorraceresults; select 3: none; select 4: none;
 -- Report 4 -> idxconstructordriverresults
 -- Report 5 -> idxresultsstatusconstructor
 -- Report 6 -> idxdriveridresults

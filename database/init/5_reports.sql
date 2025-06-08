@@ -55,22 +55,25 @@ ORDER BY 2 DESC;
 CREATE OR REPLACE VIEW report3b AS
 SELECT 
     c.name AS escuderia,
-    COALESCE(corridas.corrida, 0) as corridas
+    COALESCE(corridas.corrida, 0) as corridas,
+    COALESCE(corridas.piloto, 0) AS pilotos
 FROM constructors c
 LEFT JOIN (
     SELECT 
         constructorid,
-        COUNT(DISTINCT raceid) as corrida
+        COUNT(DISTINCT raceid) as corrida,
+        COUNT(DISTINCT driverid) AS piloto
     FROM results
     GROUP BY constructorid
 ) corridas ON c.constructorid = corridas.constructorid
-ORDER BY corrida DESC;
+ORDER BY corridas DESC;
 
 -- Quantidade de corridas por circuito por escuderia. Todos inner joins porque é necessário encontrar um circuito através de um resultado de uma corrida
 CREATE OR REPLACE VIEW report3c AS
 SELECT 
 	c.name AS escuderia, 
 	c2.name AS circuito, 
+	COUNT(DISTINCT r.driverid) AS quantidade_pilotos,
 	COUNT(DISTINCT r.raceid) AS quantidade_corridas, 
 	MIN(r.laps) AS minimo_voltas, 
 	MAX(r.laps) AS maximo_voltas, 
@@ -88,13 +91,13 @@ SELECT
 	c.name AS escuderia,
 	c2.name AS circuito,
 	r2.year AS ano,
+	COUNT(DISTINCT r.driverid) AS total_pilotos,
 	SUM(r.laps) AS total_voltas,
 	(SUM(r.milliseconds)||' milliseconds')::INTERVAL AS total_tempo
 FROM constructors c
 JOIN results r ON r.constructorid = c.constructorid
 JOIN races r2 ON r2.raceid = r.raceid
 JOIN circuits c2 ON c2.circuitid = r2.circuitid
-WHERE r.milliseconds IS NOT NULL
 GROUP BY 1, 2, 3
 ORDER BY 1, 2, 3;
 
